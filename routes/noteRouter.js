@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const noteController = require('../controller/noteController');
-const {requireAuth,checkUser} = require('../middleware/authMiddleware');
+const {requireAuth} = require('../middleware/authMiddleware');
 const Note = require('../models/noteModel');
 
 

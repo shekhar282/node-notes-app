@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const errorHandler = require('../errorHandler')
 const jwt = require('jsonwebtoken');
 
 
@@ -11,16 +10,13 @@ const createToken = (id) => {
 };
 
 const register = async (req, res, next) => {
-
-    console.log(req.body)
     try {
         const user = await User.create(req.body);
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(201).json({ user: user._id });
     } catch (error) {
-        const err = errorHandler(error)
-        res.status(401).json({ error: err })
+        res.status(401).json({ error})
     }
 }
 
@@ -33,8 +29,7 @@ const login = async (req, res, next) => {
         res.status(200).json({ user: user._id });
     }
     catch (error) {
-        const err = errorHandler(error);
-        res.status(401).json({ error: err });
+        res.status(401).json({ error});
     }
 
 }

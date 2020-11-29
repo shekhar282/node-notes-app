@@ -5,7 +5,6 @@ const noteRouter = require('./routes/noteRouter');
 const db = require('./models/db')
 const morgan = require('morgan')
 app.use(morgan('tiny'));
-const {requireAuth,checkUser} = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
 const ngrok = require('ngrok');
 
@@ -31,8 +30,9 @@ app.get('/',(req,res)=>{
 app.get('*', (req, res) => {
     res.redirect('/')
 });
+let url = process.env.PORT || 3100;
 
-app.listen(3000, () => {
-    console.log('App listening on port 3000!');
+app.listen(url, () => {
+    console.log('App Running');
 });
 

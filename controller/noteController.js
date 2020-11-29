@@ -1,14 +1,4 @@
 const Note = require('../models/noteModel');
-const errorHandler = require('../errorHandler')
-const jwt = require('jsonwebtoken');
-
-
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'secret', {
-        expiresIn: maxAge
-    });
-};
 
 const create = async (req, res, next) => {
     const { title, body } = req.body;
