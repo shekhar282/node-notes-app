@@ -1,0 +1,80 @@
+<%- include('partials/header'); -%>
+<body>
+    <nav>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/notes" class="brand-logo center">Notes</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a class="red darken-4 waves-effect waves-light btn" href="/user/logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </nav>
+<main>
+    <input type="hidden" value="<%= note._id%>" id="_id">
+    <div class="container ">
+        <div class="card blue-grey darken-1">
+            <div class="card-content">
+                <h4 class="center">Update Note</h4>
+                <div id="register-page" class="row">
+                    <div class="col s12 z-depth-6 card-panel">
+                        <form class="register-form" autocomplete="off" action="/notes/addnote" method="post">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input value="<%= note.title%>" id="title" type="text" class="validate" name="title"
+                                        required>
+                                    <label class="active" for="title">Title</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="body" name="body" class="materialize-textarea"
+                                        required><%= note.body%></textarea>
+                                    <label class="active" for="body">Note Body</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6 center">
+                                    <button class="waves-effect waves-light btn green darken-1"
+                                        id="updatedata">Update</button>
+                                </div>
+                                <div class="input-field col s6 center">
+                                    <a href="/notes" class="waves-effect waves-light btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('partials/footer'); -%>
+
+<script>
+    const form = document.querySelector('form');
+    const updateButton = document.querySelector('#updatedata');
+    const id = document.querySelector('#_id').value;
+    updateButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        // get values
+        const title = form.title.value;
+        const body = form.body.value;
+        let url = `/notes/updatenote/${id}`;
+        try {
+            const res = await fetch(url, {
+                method: 'PUT',
+                body: JSON.stringify({ title, body }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+            console.log(data);
+            location.assign('/notes');
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    });
+</script>
